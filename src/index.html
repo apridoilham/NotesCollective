@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes Collective</title>
+  </head>
+  <body class="light-theme">
+    <div id="status-banner-container">
+      <div
+        id="offline-status"
+        class="status-banner offline"
+        role="status"
+        aria-live="assertive"
+      >
+        Offline Mode: Actions will be queued.
+      </div>
+      <div
+        id="cache-status"
+        class="status-banner cache-info"
+        role="status"
+        aria-live="polite"
+      >
+        Showing cached data (may be outdated).
+      </div>
+      <div
+        id="sync-status"
+        class="status-banner sync-info"
+        role="status"
+        aria-live="polite"
+      >
+        Syncing offline actions...
+      </div>
+    </div>
+
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-top">
+          <h1>Notes Collective</h1>
+          <button
+            id="theme-toggle-button"
+            class="theme-toggle"
+            title="Toggle light/dark theme"
+            aria-label="Toggle light/dark theme"
+          >
+            <span class="visually-hidden">Toggle Theme</span>
+            <svg
+              class="sun-icon"
+              aria-hidden="true"
+              focusable="false"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              width="22"
+              height="22"
+            >
+              <path
+                d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 011.06-1.06l1.591 1.59a.75.75 0 11-1.06 1.06l-1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.894 17.894a.75.75 0 01-1.06 1.06l-1.591-1.59a.75.75 0 111.06-1.06l1.591 1.59zM12 18a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM5.106 17.894a.75.75 0 011.06 1.06l-1.59 1.591a.75.75 0 11-1.06-1.06l1.59-1.591zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM5.106 6.106a.75.75 0 011.06-1.06l1.59 1.591a.75.75 0 11-1.06 1.06L5.106 6.106z"
+              ></path>
+            </svg>
+            <svg
+              class="moon-icon"
+              aria-hidden="true"
+              focusable="false"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              width="22"
+              height="22"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-3.568 1.75-6.75 4.442-8.656a.75.75 0 01.819.162z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div class="search-container">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            width="20"
+            height="20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <label for="searchNote" class="visually-hidden">Search Notes</label>
+          <input type="search" id="searchNote" placeholder="Search notes..." />
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section id="noteInputSection" class="note-input-area"></section>
+
+      <div class="notes-list-area">
+        <div class="list-controls">
+          <div class="filter-controls">
+            <button
+              type="button"
+              id="filter-active"
+              class="filter-button active"
+              data-filter="active"
+            >
+              Active
+            </button>
+            <button
+              type="button"
+              id="filter-archived"
+              class="filter-button"
+              data-filter="archived"
+            >
+              Archived
+            </button>
+          </div>
+          <div class="sort-controls">
+            <label for="sort-select" class="visually-hidden"
+              >Sort notes by</label
+            >
+            <select id="sort-select">
+              <option value="date-desc">Date (Newest First)</option>
+              <option value="date-asc">Date (Oldest First)</option>
+              <option value="title-asc">Title (A-Z)</option>
+              <option value="title-desc">Title (Z-A)</option>
+            </select>
+          </div>
+        </div>
+
+        <section id="noteDisplaySection" class="notes-display">
+          <h2 id="list-heading" class="visually-hidden">Notes List</h2>
+          <div
+            id="notes-loading"
+            class="skeleton-container"
+            role="status"
+            aria-live="polite"
+            aria-label="Loading notes"
+            aria-busy="false"
+          ></div>
+          <div id="notes-list-container"></div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
